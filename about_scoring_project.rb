@@ -28,9 +28,37 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # More scoring examples are given in the tests below:
 #
 # Your goal is to write the score method.
+require 'set'
 
 def score(dice)
-  # You need to write this method
+  score = 0
+  numbers_set = dice.to_set()
+
+  numbers_set.each do |n|
+    count = dice.count(n)
+
+    if n == 1
+      if count >= 3
+        score += 1000
+        score += 100 * (count - 3)
+      else
+        score += 100 * count
+      end
+    elsif n == 5
+      if count >= 3
+        score += 500
+        score += 50 * (count - 3)
+      else
+        score += 50 * count
+      end
+    else
+      if count >= 3
+        score += 100 * n
+      end
+    end
+  end
+
+  return score
 end
 
 class AboutScoringProject < Neo::Koan
